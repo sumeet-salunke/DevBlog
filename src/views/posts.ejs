@@ -1,0 +1,23 @@
+<%- include("partials/head") %>
+  <%- include("partials/navbar") %>
+    <h1>
+      Blog Posts
+    </h1>
+    <% if(posts.length===0) { %>
+      <p>No posts available yet</p>
+      <% } else { %>
+
+        <% posts.forEach(post=> { %>
+          <% if(post.published) {%>
+            <article>
+              <h2>
+                <%= post.title %>
+              </h2>
+              <p>By <%=post.author %>
+              </p>
+            </article>
+            <% }%>
+
+              <% }) %>
+                <%}%>
+                  <%- include("partials/footer") %>
