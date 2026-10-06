@@ -5,6 +5,8 @@ import cookieSession from "cookie-session";
 
 import authRoutes from "./routes/auth.routes.js";
 import pageRoutes from "./routes/page.routes.js";
+import postRoutes from "./routes/post.routes.js";
+
 import env from "./config/env.js";
 import errorHandler from "./middlewares/error.middleware.js";
 
@@ -66,6 +68,7 @@ app.get("/posts", (req, res) => {
 
 app.use("/", pageRoutes);
 app.use("/", authRoutes);
+app.use("/", postRoutes);
 
 app.use((req, res) => {
   return res.status(404).render("404");

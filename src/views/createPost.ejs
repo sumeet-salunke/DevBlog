@@ -1,0 +1,76 @@
+<%- include("partials/head", { title: "Create Post" , css: "/css/post.css" }) %>
+
+  <%- include("partials/navbar") %>
+
+    <main class="post-container">
+      <div class="post-header">
+        <h1>Create Post</h1>
+        <p>Share your development experience with the community.</p>
+      </div>
+
+      <% if (errors && errors.length> 0) { %>
+        <div class="form-errors">
+          <% errors.forEach((error)=> { %>
+            <p>
+              <%= error %>
+            </p>
+            <% }) %>
+        </div>
+        <% } %>
+
+          <form action="/posts" method="POST" class="post-form">
+
+            <div class="form-group">
+              <label for="title">Title</label>
+
+              <input type="text" id="title" name="title" value="<%= oldInput.title || "" %>"
+                placeholder="Enter your post title" />
+            </div>
+
+            <div class="form-group">
+              <label for="content">Content</label>
+
+              <textarea id="content" name="content" rows="12"
+                placeholder="Write your developer experience..."><%= oldInput.content || "" %></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="tags">Tags</label>
+
+              <input type="text" id="tags" name="tags" value="<%= oldInput.tags || "" %>"
+                placeholder="js, node, mongodb, github" />
+
+              <small>Separate multiple tags using commas.</small>
+            </div>
+
+            <div class="form-group">
+              <label>Status</label>
+
+              <div class="status-options">
+
+                <label>
+                  <input type="radio" name="status" value="DRAFT" <%=oldInput.status==="DRAFT" ? "checked" : "" %>
+                  />
+                  Save as Draft
+                </label>
+
+                <label>
+                  <input type="radio" name="status" value="PUBLISHED" <%=oldInput.status==="PUBLISHED" ? "checked" : ""
+                    %>
+                  />
+                  Publish
+                </label>
+
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit">
+                Create Post
+              </button>
+            </div>
+
+          </form>
+    </main>
+
+    <!-- <%- include("partials/footer") %> -->
