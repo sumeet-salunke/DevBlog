@@ -1,9 +1,13 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
-
+import cookieSession from "cookie-session";
 
 import authRoutes from "./routes/auth.routes.js";
+import pageRoutes from "./routes/page.routes.js";
+import env from "./config/env.js";
+import errorHandler from "./middlewares/error.middleware.js";
+
 
 
 const app = express();
@@ -18,6 +22,15 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cookieSession({
+  name: "devblog_session",
+  keys: [env.sessionSecret],
+  httpOnly: true,
+  secure: false,
+  sameSite: "lax",
+  maxAge: 1000 * 60 * 60 * 24 * 7
+}));
 
 
 app.get("/", (req, res) => {
@@ -50,8 +63,14 @@ app.get("/posts", (req, res) => {
   ];
   res.render("posts", { title: "Posts", posts });
 });
-app.use("/api/auth", authRoutes);
 
+app.use("/", pageRoutes);
+app.use("/", authRoutes);
 
+app.use((req, res) => {
+  return res.status(404).render("404");
+});
+
+app.use(errorHandler);
 
 export default app;

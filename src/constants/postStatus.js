@@ -1,0 +1,4 @@
+export const POST_STATUS = {
+  DRAFT: "DRAFT",
+  PUBLISHED: "PUBLISHED"
+};

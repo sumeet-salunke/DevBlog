@@ -1,0 +1,51 @@
+<%- include("partials/head", {title:"Register", css: "/css/auth.css" }) %>
+
+  <body>
+    <main class="auth-container">
+      <div class="auth-card">
+        <h1>Create Account</h1>
+        <p>Join DevBlog and share your development journey</p>
+
+        <% if (errors && errors.length> 0) { %>
+
+          <div class="form-errors">
+
+            <% errors.forEach(error=> { %>
+              <p>
+                <%= error %>
+              </p>
+              <% }) %>
+
+          </div>
+
+          <% } %>
+
+            <form action="/register" method="post">
+              <div class="form-group">
+
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name"
+                  value="<%= typeof oldInput!=='undefined' ? oldInput.name:'' %>" required />
+
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email"
+                  value="<%= typeof oldInput !== 'undefined' ? oldInput.email : '' %>" required />
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" placeholder="Enter your password" id="password" name="password" required />
+              </div>
+              <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password"
+                  required />
+              </div>
+              <button type="submit">Register</button>
+            </form>
+            <p>Already have an account? <a href="/login">Login</a></p>
+      </div>
+
+    </main>
+  </body>

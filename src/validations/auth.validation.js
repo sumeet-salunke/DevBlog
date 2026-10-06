@@ -29,3 +29,16 @@ export const registerValidation = [
     })
     .withMessage("Password do not match"),
 ];
+
+export const loginValidation = [
+  body("email")
+    .trim()
+    .notEmpty()
+    .withMessage("Email is required.")
+    .isEmail()
+    .withMessage("Please provide a valid email.")
+  ,
+  body("password")
+    .notEmpty()
+    .withMessage("Password is required."),
+];

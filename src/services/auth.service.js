@@ -31,6 +31,34 @@ class AuthService {
     }
   }
 
+  async loginUser(loginData) {
+    const { email, password } = loginData;
+    if (!email || !password) {
+      throw new ApiError(400, AUTH_MESSAGES.INVALID_CREDENTIALS);
+    }
+    //find user by email
+    const user = await userRepository.findUserByEmail(email, true);
+    if (!user) {
+      throw new ApiError(400, AUTH_MESSAGES.INVALID_CREDENTIALS);
+    }
+    const isPasswordCorrect = await verifyPassword(password, user.passwordHash);
+    if (!isPasswordCorrect) {
+      throw new ApiError(400, AUTH_MESSAGES.INVALID_CREDENTIALS);
+
+
+    }
+    return {
+      message: AUTH_MESSAGES.LOGIN_SUCCESS,
+      data: {
+        id: user._id.toString(),
+        name: user.name,
+        email: user.email,
+        role: user.role,
+
+      }
+    }
+  }
+
 }
 
 export default new AuthService();
