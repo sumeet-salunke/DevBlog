@@ -1,0 +1,66 @@
+<%- include("partials/head", {title:"Published Posts", css: "/css/post-list.css" }) %>
+
+  <%- include("partials/navbar") %>
+
+    <main class="posts-page">
+      <div class="posts-header">
+        <div>
+          <h1>Published Posts</h1>
+          <p>Your posts currently visible to the public.</p>
+        </div>
+        <a href="/posts/create" class="create-post-btn">+Create Post</a>
+      </div>
+      <nav class="post-tabs">
+        <a href="/my-posts">All Posts</a>
+        <a href="/my-posts/published">Published</a>
+        <a href="/my-posts/drafts">Drafts</a>
+      </nav>
+
+      <% if(!posts || posts.length===0) {%>
+        <div class="empty-state">
+          <h2>No published posts</h2>
+          <p>You don't have any published posts yet.</p>
+        </div>
+        <%} else {%>
+          <div class="posts-grid">
+            <% posts.forEach(post=> { %>
+              <article class="post-card">
+                <div class="post-card-header">
+                  <span class="status-badge published">
+                    PUBLISHED
+                  </span>
+                  <span class="post-date">
+                    <%= post.publishedAt ? post.publishedAt.toLocaleDateString():"" %>
+                  </span>
+                </div>
+                <h2>
+                  <%= post.title %>
+                </h2>
+
+                <p class="post-preview">
+                  <%= post.content.length> 180
+                    ? post.content.substring(0, 180) + "..."
+                    : post.content
+                    %>
+                </p>
+
+                <% if (post.tags && post.tags.length> 0) { %>
+                  <div class="post-tags">
+                    <% post.tags.forEach(tag=> { %>
+                      <span>#<%= tag %></span>
+                      <% }) %>
+                  </div>
+                  <% } %>
+
+                    <div class="post-card-footer">
+                      Published <%= post.publishedAt ? post.publishedAt.toLocaleDateString() : "" %>
+                    </div>
+
+
+              </article>
+              <% }) %>
+          </div>
+          <%}%>
+    </main>
+
+    <%- include("partials/footer") %>

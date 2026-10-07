@@ -1,0 +1,86 @@
+<%- include("partials/head", { title: "Drafts" , css: "/css/post-list.css" }) %>
+
+
+
+  <%- include("partials/navbar") %>
+
+    <main class="posts-page">
+
+      <div class="posts-header">
+        <div>
+          <h1>Drafts</h1>
+          <p>Posts you're still working on.</p>
+        </div>
+
+        <a href="/posts/create" class="create-post-btn">
+          + Create Post
+        </a>
+      </div>
+
+      <nav class="post-tabs">
+        <a href="/my-posts">All Posts</a>
+        <a href="/my-posts/published">Published</a>
+        <a href="/my-posts/drafts" class="active">Drafts</a>
+      </nav>
+
+      <% if (!posts || posts.length===0) { %>
+
+        <div class="empty-state">
+          <h2>No drafts</h2>
+          <p>You don't have any saved drafts.</p>
+        </div>
+
+        <% } else { %>
+
+          <div class="posts-grid">
+
+            <% posts.forEach(post=> { %>
+
+              <article class="post-card">
+
+                <div class="post-card-header">
+                  <span class="status-badge draft">
+                    DRAFT
+                  </span>
+
+                  <span class="post-date">
+                    <%= post.updatedAt.toLocaleDateString() %>
+                  </span>
+                </div>
+
+                <h2>
+                  <%= post.title || "Untitled Draft" %>
+                </h2>
+
+                <p class="post-preview">
+                  <%= post.content ? (post.content.length> 180
+                    ? post.content.substring(0, 180) + "..."
+                    : post.content)
+                    : "No content yet."
+                    %>
+                </p>
+
+                <% if (post.tags && post.tags.length> 0) { %>
+                  <div class="post-tags">
+                    <% post.tags.forEach(tag=> { %>
+                      <span>#<%= tag %></span>
+                      <% }) %>
+                  </div>
+                  <% } %>
+
+                    <div class="post-card-footer">
+                      Last updated
+                      <%= post.updatedAt.toLocaleDateString() %>
+                    </div>
+
+              </article>
+
+              <% }) %>
+
+          </div>
+
+          <% } %>
+
+    </main>
+
+    <%- include("partials/footer") %>

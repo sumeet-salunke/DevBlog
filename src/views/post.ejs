@@ -1,0 +1,50 @@
+<%- include("partials/head", { title: post.title, css: "/css/post-view.css" }) %>
+
+
+
+  <%- include("partials/navbar") %>
+
+    <main class="post-view">
+
+      <article class="post-content">
+
+        <header class="post-view-header">
+
+          <div class="post-meta">
+            <span>
+              Published
+              <%= post.publishedAt ? post.publishedAt.toLocaleDateString() : "" %>
+            </span>
+          </div>
+
+          <h1>
+            <%= post.title %>
+          </h1>
+
+          <div class="author-info">
+            <span>By <%= post.author?.name || "Unknown Author" %></span>
+          </div>
+
+        </header>
+
+
+        <% if (post.tags && post.tags.length> 0) { %>
+
+          <div class="post-view-tags">
+            <% post.tags.forEach(tag=> { %>
+              <span>#<%= tag %></span>
+              <% }) %>
+          </div>
+
+          <% } %>
+
+
+            <div class="post-body">
+              <%= post.content %>
+            </div>
+
+      </article>
+
+    </main>
+
+    <%- include("partials/footer") %>

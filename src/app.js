@@ -43,28 +43,6 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/posts", (req, res) => {
-  const posts = [
-    {
-      title: "Learning Node.js",
-      author: "Sumeet",
-      published: true
-    },
-    {
-      title: "Understanding Express",
-      author: "Sumeet",
-      published: false
-
-    }
-    , {
-      title: "Gettimg started with EJS",
-      author: "Sumeet",
-      published: true
-
-    }
-  ];
-  res.render("posts", { title: "Posts", posts });
-});
 
 app.use("/", pageRoutes);
 app.use("/", authRoutes);

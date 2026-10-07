@@ -11,7 +11,7 @@ export const createPost = asyncHandler(async (req, res) => {
       return res.redirect("/drafts");
     }
     if (result.data.status === POST_STATUS.PUBLISHED) {
-      return res.redirect("/posts");
+      return res.redirect("/my-posts");
     }
 
   } catch (err) {
@@ -31,4 +31,51 @@ export const createPost = asyncHandler(async (req, res) => {
       throw err;
     }
   }
+});
+
+export const getMyPosts = asyncHandler(async (req, res) => {
+  const authorId = req.session.user.id;
+
+  const result = await postService.getAuthorPosts(authorId);
+  return res.render("myPosts", {
+    posts: result.data
+  });
+
+});
+
+export const getMyPublishedPosts = asyncHandler(async (req, res) => {
+
+  const publishedPosts = await postService.getPublishedAuthorPosts(req.session.user.id);
+  return res.render("publishedPosts", {
+    posts: publishedPosts.data
+  });
+
+});
+
+export const getMyDrafts = asyncHandler(async (req, res) => {
+
+  const draftPosts = await postService.getDraftAuthorPosts(req.session.user.id);
+  return res.render("draft", {
+    posts: draftPosts.data
+  });
+
+});
+
+export const getPublishedPostById = asyncHandler(async (req, res) => {
+  const result = await postService.getPublishedPostById(req.params.id);
+  return res.render("post", {
+    post: result.data
+  });
+});
+
+export const getEditPost = asyncHandler(async (req, res) => {
+  const result = await postService.getPostForEditing(req.session.user.id, req.params.id);
+  return res.render("editPost", {
+    post: result.data,
+  })
 })
+
+export const editMyPost = asyncHandler(async (req, res) => {
+  const result = await postService.updatePost(req.session.user.id, req.params.id, req.body);
+  return res.redirect(`/posts/${req.params.id}`);
+});

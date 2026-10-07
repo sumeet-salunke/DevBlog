@@ -6,5 +6,15 @@ export const POST_MESSAGES = {
   TITLE_TOO_SHORT: "Title is too short.",
   TITLE_TOO_LONG: "Title is too long.",
   CONTENT_TOO_SHORT: "Content is too short.",
-  CONTENT_TOO_LONG: "Content is too long."
+  CONTENT_TOO_LONG: "Content is too long.",
+  POSTS_FETCHED: "Posts fectched successfully.",
+  UNAUTHORIZED: "Unauthorized.",
+  POST_NOT_FOUND: "Posts not found.",
+  POSTID_REQUIRED: "PostId required.",
+  POST_NOT_AVAILABLE_YET: "Post not available yet.",
+  INVALID_POSTID: "Invalid postId",
+  FORBIDDEN: "You are not allowed to do this action.",
+  POST_UPDATED: "Post updated successfully",
+  CANNOT_UNPUBLISH: "Cannot make published post draft.",
+
 }

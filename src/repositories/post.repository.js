@@ -9,7 +9,7 @@ class PostRepository {
   }
 
   async findPostById(postId) {
-    return Post.findById(postId);
+    return Post.findById(postId).populate("author", "name");
   }
   async findPostsByAuthor(authorId) {
     return Post.find({ author: authorId });
@@ -31,6 +31,23 @@ class PostRepository {
 
   async deletePost(postId) {
     return Post.findByIdAndDelete(postId);
+  }
+
+  async findPublishedPostsByAuthor(authorId) {
+    return Post.find({
+      author: authorId,
+      status: POST_STATUS.PUBLISHED,
+    });
+  }
+  async findDraftPostsByAuthor(authorId) {
+    return Post.find({
+      author: authorId,
+      status: POST_STATUS.DRAFT,
+    });
+  }
+
+  async findPostByIdWithoutPopulate(postId) {
+    return Post.findById(postId);
   }
 }
 
