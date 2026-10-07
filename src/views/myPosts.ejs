@@ -40,7 +40,7 @@
                   <%= post.title %>
                 </h2>
                 <p class="post-preview">
-                  <%= post.content.length>180? post.content(0,180)+".....": post.content %>
+                  <%= post.content.length>180? post.content.slice(0,180)+".....": post.content %>
                 </p>
                 <% if (post.tags && post.tags.length> 0) { %>
                   <div class="post-tags">
@@ -53,6 +53,7 @@
                       <a href="/posts/<%=post._id%>/edit" class="edit-post-btn">Edit</a>
                     </div>
                     <form action="/posts/<%= post._id%>/delete" class="delete-post-form" method="POST">
+                      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                       <button type="submit" class="delete-post-btn">
                         Delete
                       </button>

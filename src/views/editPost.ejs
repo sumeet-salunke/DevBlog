@@ -7,9 +7,10 @@
         <p>Update your development experience.</p>
       </div>
       <form action="/posts/<%= post._id%>/edit" method="POST" class="post-form">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <div class="form-group">
           <label for="title">Title</label>
-          <input type="text" id="title" name="title" value="<%= post.title|| ''%> "
+          <input type="text" id="title" name="title" value="<%= post.title|| ''%>"
             placeholder="Enter your post title" />
         </div>
         <div class="form-group">
@@ -19,7 +20,7 @@
         </div>
         <div class="form-group">
           <label for="tags">Tags</label>
-          <input type="text" id="tags" name="tags" value="<%= post.tags?post.tags.join(" , "): ""%> "
+          <input type="text" id="tags" name="tags" value="<%= post.tags?post.tags.join(" , "): ""%>"
             placeholder="js, node, mongodb" />
           <small>Seperate multiple tags using commas.</small>
 

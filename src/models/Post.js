@@ -4,13 +4,11 @@ import { POST_STATUS } from "../constants/postStatus.js";
 const postSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true,
     trim: true,
     maxLength: 500,
   },
   content: {
     type: String,
-    required: true,
     trim: true,
     maxLength: 1000,
   },

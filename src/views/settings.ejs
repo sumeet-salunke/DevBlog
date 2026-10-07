@@ -1,0 +1,51 @@
+<%- include("partials/head", { title: "Settings", css: "/css/settings.css" }) %>
+
+  <%- include("partials/navbar") %>
+
+    <main class="settings-page">
+      <header class="settings-header">
+        <p class="settings-eyebrow">Account preferences</p>
+        <h1>Settings</h1>
+        <p>Review your DevBlog account details and account controls.</p>
+      </header>
+
+      <section class="settings-card" aria-labelledby="account-heading">
+        <div class="settings-card-heading">
+          <div>
+            <p class="settings-eyebrow">Profile</p>
+            <h2 id="account-heading">Account</h2>
+          </div>
+          <span class="settings-role"><%= user.role %></span>
+        </div>
+
+        <dl class="account-details">
+          <div>
+            <dt>Name</dt>
+            <dd><%= user.name %></dd>
+          </div>
+          <div>
+            <dt>Email</dt>
+            <dd><%= user.email %></dd>
+          </div>
+          <div>
+            <dt>Role</dt>
+            <dd><%= user.role %></dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="settings-card settings-danger-zone" aria-labelledby="danger-heading">
+        <div>
+          <p class="settings-eyebrow">Irreversible action</p>
+          <h2 id="danger-heading">Danger Zone</h2>
+          <p>Deleting your account is permanent. Your account and all of your posts will be deleted.</p>
+        </div>
+
+        <form method="POST" action="/account/delete">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button type="submit" class="delete-account-btn">Delete Account</button>
+        </form>
+      </section>
+    </main>
+
+    <%- include("partials/footer") %>

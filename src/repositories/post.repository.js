@@ -16,7 +16,7 @@ class PostRepository {
   }
 
   async findPublishedPosts() {
-    return Post.find({ status: POST_STATUS.PUBLISHED });
+    return Post.find({ status: POST_STATUS.PUBLISHED }).populate("author", "name");
   }
   async updatePost(postId, updateData) {
     return Post.findByIdAndUpdate(postId,

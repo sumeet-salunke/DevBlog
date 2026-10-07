@@ -2,10 +2,21 @@ import ApiError from "../helpers/ApiError.js";
 import postRepository from "../repositories/post.repository.js";
 import { POST_MESSAGES } from "../constants/postMessages.js";
 import { POST_STATUS } from "../constants/postStatus.js";
-import Post from "../models/Post.js";
 import mongoose from "mongoose";
 
 class PostService {
+
+  normalizeTags(tags) {
+    const tagValues = Array.isArray(tags)
+      ? tags
+      : typeof tags === "string"
+        ? tags.split(",")
+        : [];
+
+    return tagValues
+      .map((tag) => String(tag).trim())
+      .filter(Boolean);
+  }
 
 
   validatePublishingRequirements({ title, content }) {
@@ -32,7 +43,7 @@ class PostService {
   async createPost(authorId, postData) {
     const { title, content, tags, status = POST_STATUS.DRAFT } = postData;
     const newPostData = {
-      title, content, tags, author: authorId, status
+      title, content, tags: this.normalizeTags(tags), author: authorId, status
     };
     if (![POST_STATUS.DRAFT, POST_STATUS.PUBLISHED].includes(status)) {
       throw new ApiError(400, POST_MESSAGES.INVALID_POST_STATUS);
@@ -87,6 +98,14 @@ class PostService {
     };
   }
 
+  async getPublishedPosts() {
+    const posts = await postRepository.findPublishedPosts();
+    return {
+      message: POST_MESSAGES.POSTS_FETCHED,
+      data: posts,
+    };
+  }
+
   async getPublishedPostById(postId) {
     if (!postId) {
       throw new ApiError(400, POST_MESSAGES.POSTID_REQUIRED);
@@ -111,6 +130,9 @@ class PostService {
     if (!postId) {
       throw new ApiError(400, POST_MESSAGES.POSTID_REQUIRED);
     }
+    if (!mongoose.Types.ObjectId.isValid(postId)) {
+      throw new ApiError(400, POST_MESSAGES.INVALID_POSTID);
+    }
     const post = await postRepository.findPostByIdWithoutPopulate(postId);
     if (!post) {
       throw new ApiError(404, POST_MESSAGES.POST_NOT_FOUND);
@@ -127,14 +149,21 @@ class PostService {
     if (post.status === POST_STATUS.PUBLISHED && status === POST_STATUS.DRAFT) {
       throw new ApiError(400, POST_MESSAGES.CANNOT_UNPUBLISH);
     }
-    const updateFields = { title, content, tags, status };
+    const updateFields = {
+      title,
+      content,
+      tags: this.normalizeTags(tags),
+      status,
+    };
     //publishing requires stricter validation
     if (status === POST_STATUS.PUBLISHED) {
 
       this.validatePublishingRequirements({ title, content, });
     }
-    if (post.status === POST_STATUS.DRAFT) {
+    if (post.status === POST_STATUS.DRAFT && status === POST_STATUS.PUBLISHED) {
       updateFields.publishedAt = new Date();
+    } else if (status === POST_STATUS.DRAFT) {
+      updateFields.publishedAt = null;
     }
 
     const updatedPost = await postRepository.updatePost(postId, updateFields);
@@ -147,6 +176,9 @@ class PostService {
   async getPostForEditing(authorId, postId) {
     if (!postId) {
       throw new ApiError(400, POST_MESSAGES.POSTID_REQUIRED);
+    }
+    if (!mongoose.Types.ObjectId.isValid(postId)) {
+      throw new ApiError(400, POST_MESSAGES.INVALID_POSTID);
     }
     const post = await postRepository.findPostByIdWithoutPopulate
       (postId);

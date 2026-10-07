@@ -1,7 +1,10 @@
 import { Router } from "express";
 import requireAuth from "../middlewares/auth.middleware.js";
+import { getSettings } from "../controllers/page.controller.js";
 
 const router = Router();
+
+router.get("/settings", requireAuth, getSettings);
 
 router.get("/register", (req, res) => {
   res.render("register", {

@@ -8,7 +8,7 @@ export const createPost = asyncHandler(async (req, res) => {
   try {
     const result = await postService.createPost(authorId, postData);
     if (result.data.status === POST_STATUS.DRAFT) {
-      return res.redirect("/drafts");
+      return res.redirect("/my-posts/drafts");
     }
     if (result.data.status === POST_STATUS.PUBLISHED) {
       return res.redirect("/my-posts");
@@ -59,6 +59,15 @@ export const getMyDrafts = asyncHandler(async (req, res) => {
     posts: draftPosts.data
   });
 
+});
+
+export const getPublicPosts = asyncHandler(async (req, res) => {
+  const result = await postService.getPublishedPosts();
+  return res.render("posts", {
+    title: "Published Posts",
+    css: "/css/post-list.css",
+    posts: result.data,
+  });
 });
 
 export const getPublishedPostById = asyncHandler(async (req, res) => {

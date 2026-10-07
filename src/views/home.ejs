@@ -1,20 +1,12 @@
 <%- include("partials/head") %>
   <%- include("partials/navbar") %>
 
-    <main>
+    <main class="home-page">
       <h1>Welcome to <%=title %>
       </h1>
       <p>
         <%= message %>
       </p>
-      <a href="/posts/create">Create Post</a>
+      <a class="home-primary-action" href="/posts/create">Create Post</a>
     </main>
-    <section class="danger-zone">
-      <h2>Danger Zone</h2>
-      <p>Delete your account and all your posts.</p>
-
-      <form method="POST" action="/account/delete">
-        <button type="submit">Delete Account</button>
-      </form>
-    </section>
     <%- include("partials/footer") %>

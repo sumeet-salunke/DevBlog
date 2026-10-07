@@ -57,6 +57,7 @@
                       </a>
                     </div>
                     <form action="/posts/<%= post._id%>/delete" class="delete-post-form" method="POST">
+                      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                       <button type="submit" class="delete-post-btn">
                         Delete
                       </button>

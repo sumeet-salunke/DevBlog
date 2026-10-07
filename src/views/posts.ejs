@@ -1,23 +1,52 @@
-<%- include("partials/head") %>
+<%- include("partials/head", { title: "Published Posts", css: "/css/post-list.css" }) %>
   <%- include("partials/navbar") %>
-    <h1>
-      Blog Posts
-    </h1>
-    <% if(posts.length===0) { %>
-      <p>No posts available yet</p>
+
+    <main class="posts-page">
+      <header class="posts-header">
+        <div>
+          <p class="settings-eyebrow">The DevBlog community</p>
+          <h1>Published Posts</h1>
+          <p>Explore ideas, lessons, and experiences from DevBlog authors.</p>
+        </div>
+      </header>
+
+      <% if (!posts || posts.length === 0) { %>
+        <div class="empty-state">
+          <h2>No published posts yet.</h2>
+          <p>Check back soon for new posts from the community.</p>
+        </div>
       <% } else { %>
+        <div class="posts-grid">
+          <% posts.forEach((post) => { %>
+            <article class="post-card">
+              <div class="post-card-header">
+                <span class="post-date">
+                  <%= post.publishedAt ? post.publishedAt.toLocaleDateString() : "" %>
+                </span>
+              </div>
 
-        <% posts.forEach(post=> { %>
-          <% if(post.published) {%>
-            <article>
-              <h2>
-                <%= post.title %>
-              </h2>
-              <p>By <%=post.author %>
+              <h2><%= post.title %></h2>
+              <p class="post-preview">
+                <%= post.content.length > 180 ? post.content.substring(0, 180) + "..." : post.content %>
               </p>
-            </article>
-            <% }%>
 
-              <% }) %>
-                <%}%>
-                  <%- include("partials/footer") %>
+              <p class="post-author">By <%= post.author?.name || "Unknown Author" %></p>
+
+              <% if (post.tags && post.tags.length > 0) { %>
+                <div class="post-tags">
+                  <% post.tags.forEach((tag) => { %>
+                    <span>#<%= tag %></span>
+                  <% }) %>
+                </div>
+              <% } %>
+
+              <div class="post-card-actions">
+                <a href="/posts/<%= post._id %>" class="edit-post-btn">Read Post</a>
+              </div>
+            </article>
+          <% }) %>
+        </div>
+      <% } %>
+    </main>
+
+    <%- include("partials/footer") %>

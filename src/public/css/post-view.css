@@ -1,69 +1,97 @@
 .post-view {
   width: min(850px, 92%);
-  margin: 50px auto;
+  margin: 0 auto;
+  padding: 68px 0;
+}
+
+.back-to-posts {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 18px;
+  padding: 9px 13px;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color var(--transition), border-color var(--transition), color var(--transition), transform var(--transition);
+}
+
+.back-to-posts:hover {
+  color: var(--text-primary);
+  background: rgba(59, 130, 246, 0.12);
+  border-color: var(--primary);
+  transform: translateX(-2px);
 }
 
 .post-content {
-  background: #fff;
+  padding: clamp(26px, 5vw, 56px);
+  background: linear-gradient(155deg, rgba(16, 34, 56, 0.94), rgba(11, 25, 43, 0.94));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
 }
 
 .post-view-header {
-  margin-bottom: 25px;
+  margin-bottom: 26px;
 }
 
 .post-meta {
-  margin-bottom: 15px;
-  color: #777;
-  font-size: 0.9rem;
+  margin-bottom: 17px;
+  color: var(--accent);
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .post-view-header h1 {
-  margin: 0 0 15px;
-  font-size: 2.6rem;
-  line-height: 1.2;
+  margin-bottom: 17px;
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  line-height: 1.08;
 }
 
 .author-info {
-  color: #555;
+  color: var(--text-secondary);
   font-size: 0.95rem;
 }
 
 .post-view-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 25px 0;
-  padding-bottom: 25px;
-  border-bottom: 1px solid #eee;
+  margin: 28px 0;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
 }
 
 .post-view-tags span {
-  padding: 5px 10px;
-  border-radius: 15px;
-  background: #f1f1f1;
-  color: #555;
-  font-size: 0.85rem;
+  padding: 4px 9px;
+  color: #9ed9f0;
+  background: rgba(34, 211, 238, 0.09);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  border-radius: 999px;
+  font-size: 0.78rem;
 }
 
 .post-body {
-  font-size: 1.05rem;
-  line-height: 1.8;
-  color: #333;
-  white-space: pre-wrap;
+  color: #d8e5f2;
+  font-size: 1.08rem;
+  line-height: 1.9;
   overflow-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 @media (max-width: 600px) {
   .post-view {
     width: 92%;
-    margin: 30px auto;
+    padding: 40px 0;
   }
 
-  .post-view-header h1 {
-    font-size: 2rem;
+  .post-content {
+    padding: 25px 20px;
   }
 
   .post-body {
     font-size: 1rem;
+    line-height: 1.8;
   }
 }

@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { createPost, deletePost, editMyPost, getEditPost, getMyDrafts, getMyPosts, getMyPublishedPosts, getPublishedPostById } from "../controllers/post.controller.js";
+import { createPost, deletePost, editMyPost, getEditPost, getMyDrafts, getMyPosts, getMyPublishedPosts, getPublicPosts, getPublishedPostById } from "../controllers/post.controller.js";
 import requireAuth from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
+router.get("/posts", getPublicPosts);
 
 router.get("/posts/create", requireAuth, (req, res) => {
   return res.render("createPost", {

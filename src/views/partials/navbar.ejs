@@ -1,7 +1,15 @@
-<nav>
-  <a href="/">Home</a>
+<nav class="site-nav">
   <a href="/posts">Posts</a>
-  <a href="/my-posts">My-posts</a>
-  <a href="/my-posts/published">Published Posts</a>
-  <a href="/my-posts/drafts">Drafts</a>
+  <% if (typeof currentUser !== "undefined" && currentUser) { %>
+    <a href="/my-posts">My Posts</a>
+    <a href="/posts/create">Create Post</a>
+    <a href="/settings">Settings</a>
+    <form class="nav-logout-form" method="POST" action="/logout">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <button type="submit">Logout</button>
+    </form>
+  <% } else { %>
+    <a href="/login">Login</a>
+    <a href="/register">Register</a>
+  <% } %>
 </nav>

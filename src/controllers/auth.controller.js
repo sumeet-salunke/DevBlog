@@ -1,8 +1,6 @@
 import { validationResult } from "express-validator";
 import asyncHandler from "../helpers/asyncHandler.js";
-// import ApiResponse from "../helpers/ApiResponse.js";
 import authService from "../services/auth.service.js";
-import userRepository from "../repositories/user.repository.js";
 
 
 export const registerUser = asyncHandler(async (req, res) => {
@@ -37,8 +35,6 @@ export const registerUser = asyncHandler(async (req, res) => {
     }
     throw error;
   }
-  //for normal seprate frontend and backend
-  // return res.status(201).json(new ApiResponse(201, result.message, result.data));
 });
 
 export const loginUser = asyncHandler(async (req, res) => {

@@ -9,6 +9,7 @@ import postRoutes from "./routes/post.routes.js";
 
 import env from "./config/env.js";
 import errorHandler from "./middlewares/error.middleware.js";
+import csrfProtection from "./middlewares/csrf.middleware.js";
 
 
 
@@ -29,10 +30,17 @@ app.use(cookieSession({
   name: "devblog_session",
   keys: [env.sessionSecret],
   httpOnly: true,
-  secure: false,
+  secure: env.isProduction,
   sameSite: "lax",
   maxAge: 1000 * 60 * 60 * 24 * 7
 }));
+
+app.use((req, res, next) => {
+  res.locals.currentUser = req.session?.user || null;
+  next();
+});
+
+app.use(csrfProtection);
 
 
 app.get("/", (req, res) => {

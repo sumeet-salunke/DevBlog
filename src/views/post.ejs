@@ -1,10 +1,10 @@
 <%- include("partials/head", { title: post.title, css: "/css/post-view.css" }) %>
 
-
-
   <%- include("partials/navbar") %>
 
     <main class="post-view">
+
+      <a href="/posts" class="back-to-posts">&larr; Back to Posts</a>
 
       <article class="post-content">
 
@@ -27,24 +27,19 @@
 
         </header>
 
-
-        <% if (post.tags && post.tags.length> 0) { %>
-
+        <% if (post.tags && post.tags.length > 0) { %>
           <div class="post-view-tags">
-            <% post.tags.forEach(tag=> { %>
+            <% post.tags.forEach(tag => { %>
               <span>#<%= tag %></span>
-              <% }) %>
+            <% }) %>
           </div>
+        <% } %>
 
-          <% } %>
-
-
-            <div class="post-body">
-              <%= post.content %>
-            </div>
+        <div class="post-body">
+          <%= post.content %>
+        </div>
 
       </article>
-
     </main>
 
     <%- include("partials/footer") %>
