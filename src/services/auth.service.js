@@ -3,6 +3,7 @@ import userRepository from "../repositories/user.repository.js";
 import { AUTH_MESSAGES } from "../constants/authMessages.js";
 import { hashPassword } from "../utils/password/hashPassword.js";
 import { verifyPassword } from "../utils/password/verifyPassword.js";
+import postRepository from "../repositories/post.repository.js";
 
 
 class AuthService {
@@ -56,6 +57,21 @@ class AuthService {
         role: user.role,
 
       }
+    }
+  }
+  async deleteAccount(userId){
+    if(!userId){
+      throw new ApiError(401, AUTH_MESSAGES.UNAUTHORIZED);
+    }
+    const user = await userRepository.findUserById(userId);
+    if(!user){
+      throw new ApiError(404, AUTH_MESSAGES.USER_NOT_FOUND);
+    }
+    await postRepository.deletePostsByAuthor(userId);
+    await userRepository.deleteUser(userId);
+    return {
+      message: AUTH_MESSAGES.ACCOUNT_DELETED,
+      data: null,
     }
   }
 

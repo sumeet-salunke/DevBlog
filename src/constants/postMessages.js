@@ -16,5 +16,6 @@ export const POST_MESSAGES = {
   FORBIDDEN: "You are not allowed to do this action.",
   POST_UPDATED: "Post updated successfully",
   CANNOT_UNPUBLISH: "Cannot make published post draft.",
+  POST_DELETED: "Post deleted successfully.",
 
 }

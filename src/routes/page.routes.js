@@ -4,7 +4,12 @@ import requireAuth from "../middlewares/auth.middleware.js";
 const router = Router();
 
 router.get("/register", (req, res) => {
-  res.render("register");
+  res.render("register", {
+    errors: [],
+    oldInput: {
+      name: "", email: ""
+    }
+  });
 });
 
 router.get("/login", (req, res) => {

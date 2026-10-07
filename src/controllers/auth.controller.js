@@ -2,6 +2,7 @@ import { validationResult } from "express-validator";
 import asyncHandler from "../helpers/asyncHandler.js";
 // import ApiResponse from "../helpers/ApiResponse.js";
 import authService from "../services/auth.service.js";
+import userRepository from "../repositories/user.repository.js";
 
 
 export const registerUser = asyncHandler(async (req, res) => {
@@ -87,3 +88,9 @@ export const logoutUser = asyncHandler(async (req, res) => {
   req.session.user = null;
   return res.redirect("/login");
 });
+
+export const deleteAccount = asyncHandler(async (req, res) => {
+  await authService.deleteAccount(req.session.user.id);
+  req.session = null;
+  return res.redirect("/login");
+})

@@ -1,0 +1,53 @@
+<%- include("partials/head",{title:"Edit Post",css: "/css/post.css" }) %>
+
+  <%- include("partials/navbar") %>
+    <main class="post-container">
+      <div class="post-header">
+        <h1>Edit post</h1>
+        <p>Update your development experience.</p>
+      </div>
+      <form action="/posts/<%= post._id%>/edit" method="POST" class="post-form">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" id="title" name="title" value="<%= post.title|| ''%> "
+            placeholder="Enter your post title" />
+        </div>
+        <div class="form-group">
+          <label for="content">Content</label>
+          <textarea name="content" id="content" rows="12" placeholder="Write your development experience...."><%= post.content
+      %></textarea>
+        </div>
+        <div class="form-group">
+          <label for="tags">Tags</label>
+          <input type="text" id="tags" name="tags" value="<%= post.tags?post.tags.join(" , "): ""%> "
+            placeholder="js, node, mongodb" />
+          <small>Seperate multiple tags using commas.</small>
+
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <div class="status-options">
+            <% if(post.status==="DRAFT" ) {%>
+              <label>
+                <input type="radio" name="status" value="DRAFT" checked />
+                Save as Draft
+              </label>
+              <label>
+                <input type="radio" name="status" value="PUBLISHED">
+                Publish
+              </label>
+              <%} else {%>
+                <label>
+                  <input type="radio" name="status" value="PUBLISHED" checked />
+                  Publish
+                </label>
+                <%}%>
+          </div>
+        </div>
+        <div class="form-actions">
+          <a href="/my-posts" class="cancel-btn"> Cancel</a>
+          <button type="submit">Save Changes</button>
+        </div>
+      </form>
+    </main>
+    <!-- <%- include("partials/footer") %> -->

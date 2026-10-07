@@ -230,3 +230,24 @@
     grid-template-columns: 1fr;
   }
 }
+
+.post-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+.edit-post-btn {
+  display: inline-block;
+  padding: 7px 13px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  color: #333;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.edit-post-btn:hover {
+  background: #f5f5f5;
+}

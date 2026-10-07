@@ -19,6 +19,10 @@ class UserRepository {
     return User.findById(userId);
   }
 
+  async deleteUser(userId) {
+    return User.findByIdAndDelete(userId);
+  }
+
 }
 
 export default new UserRepository();

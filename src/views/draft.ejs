@@ -67,6 +67,16 @@
                       <% }) %>
                   </div>
                   <% } %>
+                    <div class="post-card-actions">
+                      <a href="/posts/<%= post._id %>/edit" class="edit-post-btn">
+                        Edit
+                      </a>
+                    </div>
+                    <form action="/posts/<%= post._id%>/delete" class="delete-post-form" method="POST">
+                      <button type="submit" class="delete-post-btn">
+                        Delete
+                      </button>
+                    </form>
 
                     <div class="post-card-footer">
                       Last updated

@@ -111,7 +111,7 @@ class PostService {
     if (!postId) {
       throw new ApiError(400, POST_MESSAGES.POSTID_REQUIRED);
     }
-    const post = await postRepository.findPostById(postId);
+    const post = await postRepository.findPostByIdWithoutPopulate(postId);
     if (!post) {
       throw new ApiError(404, POST_MESSAGES.POST_NOT_FOUND);
     }
@@ -160,6 +160,27 @@ class PostService {
     return {
       message: POST_MESSAGES.POSTS_FETCHED,
       data: post,
+    }
+  }
+
+  async deletePost(authorId, postId) {
+    if (!postId) {
+      throw new ApiError(400, POST_MESSAGES.POSTID_REQUIRED);
+    }
+    if (!mongoose.Types.ObjectId.isValid(postId)) {
+      throw new ApiError(400, POST_MESSAGES.INVALID_POSTID);
+    }
+    const post = await postRepository.findPostByIdWithoutPopulate(postId);
+    if (!post) {
+      throw new ApiError(404, POST_MESSAGES.POST_NOT_FOUND);
+    }
+    if (post.author.toString() !== authorId.toString()) {
+      throw new ApiError(403, POST_MESSAGES.FORBIDDEN);
+    }
+    await postRepository.deletePost(postId);
+    return {
+      message: POST_MESSAGES.POST_DELETED,
+      data: null,
     }
   }
 }

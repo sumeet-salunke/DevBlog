@@ -77,5 +77,10 @@ export const getEditPost = asyncHandler(async (req, res) => {
 
 export const editMyPost = asyncHandler(async (req, res) => {
   const result = await postService.updatePost(req.session.user.id, req.params.id, req.body);
-  return res.redirect(`/posts/${req.params.id}`);
+  return res.redirect(`/my-posts`);
+});
+
+export const deletePost = asyncHandler(async (req, res) => {
+  await postService.deletePost(req.session.user.id, req.params.id);
+  res.redirect("/my-posts");
 });

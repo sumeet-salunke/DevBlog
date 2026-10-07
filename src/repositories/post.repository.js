@@ -49,6 +49,10 @@ class PostRepository {
   async findPostByIdWithoutPopulate(postId) {
     return Post.findById(postId);
   }
+
+  async deletePostsByAuthor(authorId) {
+    return Post.deleteMany({ author: authorId });
+  }
 }
 
 export default new PostRepository();
